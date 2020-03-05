@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--Jquery to handle Username -->
     <script>
         $(document).ready(function(){
             $("button").click(function(){
@@ -18,17 +19,22 @@
 <body>
     <div class="jumbotron text-center">
         <h1>Simple Website</h1>
-        <p>GithHub Respository Gawker</p>
+        <p>GitHub Respository Gawker</p>
     </div>
-
-    <div class="container">
+    <!-- Container to contain all the elements related to  the information and input of the Client -->
+    <div class="Input container">
+        <!-- Dividing the Container in Rows to better handle the division of elements -->
         <div class="row">
+            <!-- Blank grid of size 4 for better appearance-->
             <div class="col-sm-4"></div>
+            <!-- Username text box with a grid size of 4 giving information on what to do-->
             <div class="col-sm-4">
                 <h3>Type GitHub Username Below</h3>
             </div>
         </div>
+        <!-- Second Row for input of Username & button-->
         <div class="row">
+            <!--Little Class form to put the username text box & Enter Button inline-->
             <form class="form-inline" action="/action_page.php">
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -38,5 +44,10 @@
             </form>
         </div>
     </div>
+    <!--Container for the Output related tasks -->
+    <div class="Output Container">
+
+    </div>
+
 </body>
 </html>
