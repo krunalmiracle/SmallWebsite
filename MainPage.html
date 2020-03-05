@@ -9,9 +9,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--Jquery to handle Username -->
     <script>
+        function retrieve_json(username_git){
+        var result="";
+           $.ajax({
+                url: "https://api.github.com/users/" + username_git+"/repos",jsonp: true,method: "GET",dataType: "json",
+                success: function(data){
+                result = data;
+                console.log(data);
+
+                },
+                fail: function(){
+                    alert("USERNAME DOESN'T EXIST!");
+                },
+                error: function () {
+                    alert("PLEASE TYPE USERNAME CORRECTLY");
+                }
+            });
+            return result;
+        }
+
         $(document).ready(function(){
             $("button").click(function(){
-                $(this).hide();
+                var username_git = $("#username").val();
+                console.log(username_git);
+                var result = retrieve_json(username_git);
+                  console.log(result);
             });
         });
     </script>
@@ -46,7 +68,24 @@
     </div>
     <!--Container for the Output related tasks -->
     <div class="Output Container">
-
+        <h2>Basic Table</h2>
+        <p>The table below shows the information of the Above Username Given</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Repo Name</th>
+                    <th>Description</th>
+                    <th>Followers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Marks Improver</td>
+                    <td>Used to increase marks</td>
+                    <td>330</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </body>
