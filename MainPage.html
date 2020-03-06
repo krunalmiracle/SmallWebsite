@@ -9,31 +9,48 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--Jquery to handle Username -->
     <script>
-        function retrieve_json(username_git){
-        var result="";
-           $.ajax({
-                url: "https://api.github.com/users/" + username_git+"/repos",jsonp: true,method: "GET",dataType: "json",
+        //Appends data to HTML
+        function Append_data_table(json_data){
+            //console.log(json_data[0].name);Tests the structure of the json data
+            //Appends each items formatted data to a string variable html
+            var html = "";
+            $.each(json_data, function (key, item) {
+                html += formatItem(item);
+            });
+            //Appending all the data formatted before to Output Container inside the table body
+            $("#tbdata").append(html);
+        }
+        //Formatting Data to Correct Table Format of Bootstrap in Html
+        function formatItem(item) {
+            return "<tr> <td>" +item.name + "</td><td>" + item.description + "</td><td>" + item.watchers_count + "</td> </tr>";
+        }
+        //To handle JSON retrieved from GITHUB
+        function Retrieve_json(username_git){
+            //Ajax asynchronicity running of code disabled so everything runs linearly
+            $.ajaxSetup({async:false});
+           $.ajax({url: "https://api.github.com/users/" + username_git+"/repos",jsonp: true,method: "GET",dataType: "json",
                 success: function(data){
-                result = data;
-                console.log(data);
-
+                    //console.log(data); To check the Ajax petition resolved the data properly
+                    Append_data_table(data);
                 },
                 fail: function(){
                     alert("USERNAME DOESN'T EXIST!");
                 },
                 error: function () {
-                    alert("PLEASE TYPE USERNAME CORRECTLY");
+                    alert("PLEASE TYPE USERNAME CORRECTLY!");
                 }
             });
-            return result;
+            //Enabling the asynchronicity of the code again so everything is back to normal
+            $.ajaxSetup({async:true});
         }
-
+        // Main function to handle interactivity between user and Github petition
         $(document).ready(function(){
             $("button").click(function(){
+                //Takes in the text value from the textbox value from html and saves it in the variable username_git
                 var username_git = $("#username").val();
-                console.log(username_git);
-                var result = retrieve_json(username_git);
-                  console.log(result);
+                //console.log(username_git); To check if the value given in textbox was working properly
+                //Solves the Json Petition from GitHub server and presents them into the table below in Html
+                Retrieve_json(username_git);
             });
         });
     </script>
@@ -70,7 +87,7 @@
     <div class="Output Container">
         <h2>Basic Table</h2>
         <p>The table below shows the information of the Above Username Given</p>
-        <table class="table">
+        <table id = "table_git" class="table">
             <thead>
                 <tr>
                     <th>Repo Name</th>
@@ -78,11 +95,9 @@
                     <th>Followers</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbdata">
                 <tr>
-                    <td>Marks Improver</td>
-                    <td>Used to increase marks</td>
-                    <td>330</td>
+                    <!-- Test Data  <td>Marks Improver</td><td>Used to increase marks</td><td>330</td> -->
                 </tr>
             </tbody>
         </table>
