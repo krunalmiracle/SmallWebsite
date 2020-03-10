@@ -17,7 +17,9 @@
             $.each(json_data, function (key, item) {
                 html += formatItem(item);
             });
-            //Appending all the data formatted before to Output Container inside the table body
+            //Clearing the Table to put the new data back
+             $("#tbdata").empty();
+             //Appending all the data formatted before to Output Container inside the table body
             $("#tbdata").append(html);
         }
         //Formatting Data to Correct Table Format of Bootstrap in Html
