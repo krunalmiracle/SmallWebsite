@@ -18,9 +18,9 @@
                 html += formatItem(item);
             });
             //Clearing the Table to put the new data back
-             $("#tbdata").empty();
+             $("#tbdata").empty().append(html);
              //Appending all the data formatted before to Output Container inside the table body
-            $("#tbdata").append(html);
+            //$("#tbdata").append(html);
         }
         //Formatting Data to Correct Table Format of Bootstrap in Html
         function formatItem(item) {
@@ -29,7 +29,7 @@
         //To handle JSON retrieved from GITHUB
         function Retrieve_json(username_git){
             //Ajax asynchronicity running of code disabled so everything runs linearly
-            $.ajaxSetup({async:false});
+           // $.ajaxSetup({async:false});
            $.ajax({url: "https://api.github.com/users/" + username_git+"/repos",jsonp: true,method: "GET",dataType: "json",
                 success: function(data){
                     //console.log(data); To check the Ajax petition resolved the data properly
@@ -43,16 +43,25 @@
                 }
             });
             //Enabling the asynchronicity of the code again so everything is back to normal
-            $.ajaxSetup({async:true});
+            //$.ajaxSetup({async:true});
         }
         // Main function to handle interactivity between user and Github petition
         $(document).ready(function(){
-            $("button").click(function(){
+            $('button').click(function(){
                 //Takes in the text value from the textbox value from html and saves it in the variable username_git
                 var username_git = $("#username").val();
                 //console.log(username_git); To check if the value given in textbox was working properly
                 //Solves the Json Petition from GitHub server and presents them into the table below in Html
                 Retrieve_json(username_git);
+            });
+            $('#username').keypress(function (e) {
+                if (e.which === 13) {
+                    //Takes in the text value from the text box value from Html and saves it in the variable username_git
+                    var username_git = $("#username").val();
+                    //Solves the Json Petition from GitHub server and presents them into the table below in Html
+                    Retrieve_json(username_git);
+                    return false;    //To return out of event!
+                }
             });
         });
     </script>
